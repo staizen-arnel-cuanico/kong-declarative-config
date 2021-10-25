@@ -1,9 +1,18 @@
-_format_version: "1.1"
+_format_version: "2.1"
 
 services:
-- name: mocky
+- name: mocky-api-server
   url: http://www.mocky.io/v2/5ca725833400002c4876b363
-  routes:
-  - name: mocky
-    paths:
+routes:
+- name: mocky-requests
+  service: mocky-api-server
+  paths:
     - /mocky
+plugins:
+- name: jwt
+  service: mocky-api-server
+  enabled: true
+  config:
+    key_claim_name: kid
+    claims_to_verify:
+    - exp
