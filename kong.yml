@@ -13,6 +13,11 @@ plugins:
   service: mocky-api-server
   enabled: true
   config:
-    key_claim_name: kid
+    key_claim_name: keyid
     claims_to_verify:
     - exp
+consumers:
+  - username: login_server_issuer
+jwt_secrets:
+  - consumer: login_server_issuer
+    secret: "secret-hash-brown-bear-market-rate-limit"
