@@ -1,23 +1,29 @@
 _format_version: "2.1"
 
 services:
-- name: mocky-api-server
-  url: http://www.mocky.io/v2/5ca725833400002c4876b363
+- name: sso-api
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com
+- name: config-api
+  url: http://cfd-sso2-alb-2106456019.ap-southeast-1.elb.amazonaws.com
 routes:
-- name: mocky-requests
-  service: mocky-api-server
+- name: sso-requests
+  service: sso-api
   paths:
-    - /mocky
-plugins:
-- name: jwt
-  service: mocky-api-server
-  enabled: true
-  config:
-    key_claim_name: keyid
-    claims_to_verify:
-    - exp
-consumers:
-  - username: login_server_issuer
-jwt_secrets:
-  - consumer: login_server_issuer
-    secret: "secret-hash-brown-bear-market-rate-limit"
+    - /sso
+- name: config-requests
+  service: config-api
+  paths:
+    - /config
+#plugins:
+#- name: jwt
+ # service: mocky-api-server
+  #enabled: true
+  #config:
+   # key_claim_name: keyid
+   # claims_to_verify:
+   # - exp
+#consumers:
+ # - username: login_server_issuer
+#jwt_secrets:
+ # - consumer: login_server_issuer
+  #  secret: "secret-hash-brown-bear-market-rate-limit"
