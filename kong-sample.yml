@@ -2,8 +2,22 @@ _format_version: "1.1"
 
 services:
 - name: mocky
-  url: http://www.mocky.io/v2/5ca725833400002c4876b363
+  url: http://www.mocky.io/
   routes:
   - name: mocky
     paths:
     - /mocky
+
+- name: mocky-hello
+  url: http://www.mocky.io/v2/5ca725833400002c4876b363
+  routes:
+  - name: mocky-hello
+    paths:
+    - /mocky/hello
+
+plugins:
+- name: request-termination
+  route: mocky-hello
+  config: 
+    status_code: 403
+    message: So long and thanks for all the fish!
