@@ -5,25 +5,168 @@ services:
   url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com
 - name: config-api
   url: http://cfd-sso2-alb-2106456019.ap-southeast-1.elb.amazonaws.com
+- name: help-api
+  url: http://cfd-sso3-alb-455867102.ap-southeast-1.elb.amazonaws.com
+- name: cash-api
+  url: http://cfd-sso4-alb-1724061450.ap-southeast-1.elb.amazonaws.com
+- name: test-api
+  url: http://httpbin.org
+
 routes:
 - name: sso-requests
   service: sso-api
   paths:
     - /sso
+  strip_path: false
 - name: config-requests
   service: config-api
   paths:
     - /config
-#plugins:
-#- name: jwt
- # service: mocky-api-server
-  #enabled: true
-  #config:
-   # key_claim_name: keyid
-   # claims_to_verify:
-   # - exp
-#consumers:
- # - username: login_server_issuer
-#jwt_secrets:
- # - consumer: login_server_issuer
-  #  secret: "secret-hash-brown-bear-market-rate-limit"
+  strip_path: false
+- name: help-requests
+  service: help-api
+  paths:
+    - /help
+  strip_path: false
+- name: cash-requests
+  service: cash-api
+  paths:
+    - /cash
+  strip_path: false
+- name: test-requests
+  service: test-api
+  paths:
+    - /cfd/httpbin
+
+plugins:
+- name: cors
+  service: sso-api
+  config: 
+    origins:
+    - 'https://cfd.staizen.com'
+    - 'https://cfd-api-mocks.staizen.com'
+    - 'capacitor://cfd.staizen.com'
+    - 'https://d16769b3rvov91.cloudfront.net'
+    - 'http://localhost'
+    - 'http://localhost:3000'
+    methods:
+    - GET
+    - HEAD
+    - PUT
+    - PATCH
+    - POST
+    - DELETE
+    - OPTIONS
+    - TRACE
+    - CONNECT
+    headers:
+    - Content-Length
+    - Content-Type
+    - Date
+    - Set-Cookie
+    - Authorization
+    credentials: true
+    max_age: 600
+    preflight_continue: false
+
+- name: cors
+  service: config-api
+  config: 
+    origins:
+    - 'https://cfd.staizen.com'
+    - 'https://cfd-api-mocks.staizen.com'
+    - 'capacitor://cfd.staizen.com'
+    - 'https://d16769b3rvov91.cloudfront.net'
+    - 'http://localhost'
+    - 'http://localhost:3000'
+    methods:
+    - GET
+    - HEAD
+    - PUT
+    - PATCH
+    - POST
+    - DELETE
+    - OPTIONS
+    - TRACE
+    - CONNECT
+    headers:
+    - Content-Length
+    - Content-Type
+    - Date
+    - Set-Cookie
+    - Authorization
+    credentials: true
+    max_age: 600
+    preflight_continue: false
+
+- name: cors
+  service: help-api
+  config: 
+    origins:
+    - 'https://cfd.staizen.com'
+    - 'https://cfd-api-mocks.staizen.com'
+    - 'capacitor://cfd.staizen.com'
+    - 'https://d16769b3rvov91.cloudfront.net'
+    - 'http://localhost'
+    - 'http://localhost:3000'
+    methods:
+    - GET
+    - HEAD
+    - PUT
+    - PATCH
+    - POST
+    - DELETE
+    - OPTIONS
+    - TRACE
+    - CONNECT
+    headers:
+    - Content-Length
+    - Content-Type
+    - Date
+    - Set-Cookie
+    - Authorization
+    credentials: true
+    max_age: 600
+    preflight_continue: false
+
+- name: cors
+  service: cash-api
+  config: 
+    origins:
+    - 'https://cfd.staizen.com'
+    - 'https://cfd-api-mocks.staizen.com'
+    - 'capacitor://cfd.staizen.com'
+    - 'https://d16769b3rvov91.cloudfront.net'
+    - 'http://localhost'
+    - 'http://localhost:3000'
+    methods:
+    - GET
+    - HEAD
+    - PUT
+    - PATCH
+    - POST
+    - DELETE
+    - OPTIONS
+    - TRACE
+    - CONNECT
+    headers:
+    - Content-Length
+    - Content-Type
+    - Date
+    - Set-Cookie
+    - Authorization
+    credentials: true
+    max_age: 600
+    preflight_continue: false
+
+- name: file-log
+  service: sso-api
+  config: 
+    path: /tmp/sso-api.log
+    reopen: false
+
+- name: file-log
+  service: config-api
+  config: 
+    path: /tmp/config-api.log
+    reopen: false
