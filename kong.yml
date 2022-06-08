@@ -11,6 +11,8 @@ services:
   url: http://cfd-sso4-alb-1724061450.ap-southeast-1.elb.amazonaws.com
 - name: test-api
   url: http://httpbin.org
+- name: profile-api
+  url: http://cfd-sso5-alb-1839922739.ap-southeast-1.elb.amazonaws.com
 
 routes:
 - name: sso-requests
@@ -37,6 +39,11 @@ routes:
   service: test-api
   paths:
     - /cfd/httpbin
+- name: profile-requests
+  service: profile-api
+  paths:
+    - /profile
+  strip_path: false
 
 plugins:
 - name: cors
@@ -132,6 +139,36 @@ plugins:
 - name: cors
   service: cash-api
   config: 
+    origins:
+    - 'https://cfd.staizen.com'
+    - 'https://cfd-api-mocks.staizen.com'
+    - 'capacitor://cfd.staizen.com'
+    - 'https://d16769b3rvov91.cloudfront.net'
+    - 'http://localhost'
+    - 'http://localhost:3000'
+    methods:
+    - GET
+    - HEAD
+    - PUT
+    - PATCH
+    - POST
+    - DELETE
+    - OPTIONS
+    - TRACE
+    - CONNECT
+    headers:
+    - Content-Length
+    - Content-Type
+    - Date
+    - Set-Cookie
+    - Authorization
+    credentials: true
+    max_age: 600
+    preflight_continue: false
+
+- name: cors
+  service: profile-api
+  config:
     origins:
     - 'https://cfd.staizen.com'
     - 'https://cfd-api-mocks.staizen.com'
