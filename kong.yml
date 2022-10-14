@@ -2,19 +2,19 @@ _format_version: "2.1"
 
 services:
 - name: sso-api
-  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com:80
 - name: config-api
-  url: http://cfd-sso2-alb-2106456019.ap-southeast-1.elb.amazonaws.com
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com:9091
 - name: help-api
-  url: http://cfd-sso3-alb-455867102.ap-southeast-1.elb.amazonaws.com
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com:9093
 - name: cash-api
-  url: http://cfd-sso4-alb-1724061450.ap-southeast-1.elb.amazonaws.com
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com:9094
 - name: test-api
   url: http://httpbin.org
 - name: profile-api
-  url: http://cfd-sso5-alb-1839922739.ap-southeast-1.elb.amazonaws.com
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com:9095
 - name: actions-api
-  url: http://cfd-sso6-alb-1777444219.ap-southeast-1.elb.amazonaws.com
+  url: http://cfd-sso-alb-969780782.ap-southeast-1.elb.amazonaws.com:9097
 
 routes:
 - name: sso-requests
